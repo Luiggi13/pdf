@@ -1,34 +1,15 @@
-# Start from golang base image
-FROM golang:alpine
 
-# Add Maintainer info
+FROM python:3.9
 LABEL maintainer="Christian Llansola"
 
-# Install git.
-# Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git && apk add --no-cach bash && apk add build-base
 
-# Setup folders
-RUN mkdir /app
-WORKDIR /app
-RUN go install github.com/air-verse/air@latest
-
-# Copy the source from the current directory to the working Directory inside the container
 COPY . .
-COPY .env .
 
-# Download all the dependencies
-RUN go get -d -v ./...
+COPY requirements.txt requirements.txt
 
-# Install the package
-RUN go install -v ./...
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Build the Go app
-# RUN go build -o /build
 
-# Expose port 8080 to the outside world
-# EXPOSE 1313
 
-# Run the executable
-# CMD [ "/build" ]
-CMD ["air", "-c", "air.toml"]
+
+CMD ["fastapi", "run", "main.py", "--port", "1313"]
