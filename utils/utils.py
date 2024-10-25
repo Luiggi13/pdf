@@ -16,7 +16,7 @@ def compressPDFFile(input_file_path):
     """Function to compress PDF via Ghostscript command line interface"""
     destinationFolderFile = "./descargas"
     original_name = input_file_path
-    fileNameToReduce =  input_file_path + ".pdf"
+    fileNameToReduce =  "./inputs/" + input_file_path + ".pdf"
     exportName = setFinalName(original_name)
     # Basic controls
     if not os.path.exists(destinationFolderFile):

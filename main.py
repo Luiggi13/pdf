@@ -1,11 +1,11 @@
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from routers import pdfs, health
 from utils.utils import compress
 
 
 from fastapi import FastAPI, Request
 
-PREFIX= "/api/v1"
 ORIGINS = ["*"]
 app = FastAPI(
     title="User Management",
@@ -18,6 +18,8 @@ app = FastAPI(
         "email": "christian.llansola@gmail.com",
     })
 
+app.mount("/ok", StaticFiles(directory="descargas", html = False), name="descargas")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ORIGINS,
@@ -25,5 +27,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.include_router(pdfs.router,prefix=PREFIX)
-app.include_router(health.router,prefix=PREFIX)
+app.include_router(pdfs.router)
+app.include_router(health.router)
