@@ -6,7 +6,6 @@ from utils.utils import compress
 
 router = APIRouter()
 
-
 @router.get("/pdf", tags=["PDF"], summary="Resize pdf file size", description="")
 def get_pdfs(input: str, request: Request):
     return JSONResponse(content={"message": compress(input)}, headers={"X-API": "asdsa"})

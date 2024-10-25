@@ -1,5 +1,5 @@
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pdfs
+from routers import pdfs, health
 from utils.utils import compress
 
 
@@ -26,10 +26,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(pdfs.router,prefix=PREFIX)
-@app.get("/", include_in_schema=False)
-def read_root():
-    return {"mensaje": "OK"}
-
-
-if __name__ == "__main__":
-    print("Starting server...")
+app.include_router(health.router,prefix=PREFIX)
