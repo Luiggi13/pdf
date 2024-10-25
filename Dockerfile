@@ -2,6 +2,10 @@
 FROM python:3.9
 LABEL maintainer="Christian Llansola"
 
+RUN apt-get update
+RUN apt-get -y install ghostscript
+RUN gs --help
+RUN sleep 2
 
 COPY . .
 
