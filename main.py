@@ -1,6 +1,6 @@
 from fastapi.middleware.cors import CORSMiddleware
 from routers import pdfs
-from routers.utils import compress
+from utils.utils import compress
 
 
 from fastapi import FastAPI, Request
