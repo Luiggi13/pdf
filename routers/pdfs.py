@@ -7,10 +7,6 @@ from fastapi import Request
 from utils.utils import compress
 
 router = APIRouter()
-
-@router.get("/pdf", tags=["PDF"], summary="Resize pdf file size", description="")
-def get_pdfs(input: str, request: Request):
-    return JSONResponse(content={"message": compress(input)}, headers={"X-API": "asdsa"})
     
 @router.post("/pdf/upload", tags=["PDF"], summary="Upload pdf file", description="")
 async def create_upload_file(file: UploadFile | None = None):
