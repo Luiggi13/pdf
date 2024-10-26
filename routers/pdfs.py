@@ -16,4 +16,4 @@ async def create_upload_file(file: UploadFile = File(...)):
     if not file:
         return {"message": "fileName"}
     else:
-        return {"message": "File processed successfully", "size": file.size}
+        return {"message": "File processed successfully", "size": file.filename}
