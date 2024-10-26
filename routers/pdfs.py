@@ -1,16 +1,16 @@
 import os
 import aiofiles
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile
 
-from utils.utils import compress
+from utils.utils import compress, valid_content_length
 
 router = APIRouter()
-    
-@router.post("/pdf/upload", tags=["PDF"], summary="Upload pdf file", description="")
+
+@router.post("/pdf/upload", dependencies=[Depends(valid_content_length)], tags=["PDF"], summary="Upload pdf file", description="")
 async def create_upload_file(file: UploadFile = File(...)):
-    async with aiofiles.open("./inputs/" + file.filename, 'wb') as out_file:
-            while content := await file.read(1024):
-                await out_file.write(content)
+    with open("./inputs/" + file.filename, 'wb') as out_file:
+        async for chunk in file.iter_chunked(1024):
+            out_file.write(chunk)
     pdfNameCompressed = compress(file.filename.split('.')[0])
     os.remove("./inputs/" + file.filename)
     if not file:

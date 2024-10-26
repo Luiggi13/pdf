@@ -12,6 +12,8 @@ import subprocess
 import sys
 import time
 
+from fastapi import Header
+
 def compressPDFFile(input_file_path):
     """Function to compress PDF via Ghostscript command line interface"""
     destinationFolderFile = "./descargas"
@@ -66,3 +68,7 @@ def setFinalName(original_name):
 
 def compress(input: str):
     return compressPDFFile(input)
+
+
+async def valid_content_length(content_length: int = Header(..., lt=50_000_000)):
+    return content_length
