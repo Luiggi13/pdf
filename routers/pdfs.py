@@ -11,9 +11,9 @@ async def create_upload_file(file: UploadFile = File(...)):
     async with aiofiles.open("./inputs/" + file.filename, 'wb') as out_file:
             while content := await file.read(1024):
                 await out_file.write(content)
-    compress(file.filename.split('.')[0])
+    pdfNameCompressed = compress(file.filename.split('.')[0])
     os.remove("./inputs/" + file.filename)
     if not file:
         return {"message": "fileName"}
     else:
-        return {"message": "File processed successfully", "size": file.filename}
+        return {"message": "File processed successfully", "size": pdfNameCompressed}
